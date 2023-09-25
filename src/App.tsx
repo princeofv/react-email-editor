@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useState } from 'react';
+import EmailEditor, { EditorRef, EmailEditorProps } from 'react-email-editor';
+export default function App() {
+  const emailEditorRef = useRef<EditorRef>(null);
 
-function App() {
+  const exportHtml = () => {
+    const unlayer = emailEditorRef.current?.editor;
+
+    unlayer?.exportHtml((data) => {
+      const { design, html } = data;
+      console.log('exportHtml', html);
+    });
+  };
+  const onReady: EmailEditorProps['onReady'] = (unlayer) => {
+    // editor is ready
+    // you can load your template here;
+    // the design json can be obtained by calling
+    // unlayer.loadDesign(callback) or unlayer.exportHtml(callback)
+
+    // const templateJson = { DESIGN JSON GOES HERE };
+    // unlayer.loadDesign(templateJson);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <button onClick={exportHtml}>Export HTML</button>
+      </div>
+      <EmailEditor ref={emailEditorRef} onReady={onReady} />
     </div>
-  );
+  )
 }
-
-export default App;
