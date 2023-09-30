@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import EmailEditor, { EditorRef, EmailEditorProps } from 'react-email-editor';
 import data from "./data.json"
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
     unlayer?.exportHtml((data) => {
       const { design, html, } = data;
       console.log('exportHtml', design);
+      console.log('html :>> ', html);
     });
     // unlayer?.saveDesign((data)=>{
     //   const { design, html, } = data;
